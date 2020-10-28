@@ -25,14 +25,14 @@ def user_pass():
   password = input('Please Enter A Password That You Would Like To Check: ')
   count = pwned_api_check(password)
   if count:
-    print(f'{password} was found {count} times... you should probably change your password!')
+    print(f'{password} was found {count} times... you should change your password!')
   else:
-    print(f'{password} was NOT found. Carry on!')
+    print(f'{password} was NOT found, it is safe to use!')
 
 def main():
   while True:
     user_pass()
-    again = input('Press enter to run again or q and enter to quit! ')
+    again = input('Press Enter to Run Again or Q and Enter to quit! ')
     if again == 'q':
       break
 
