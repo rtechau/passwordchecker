@@ -1,5 +1,6 @@
 import requests
 import hashlib
+import tkinter as tk
 
 def request_api_data(query_char):
   url = 'https://api.pwnedpasswords.com/range/' + query_char
@@ -22,19 +23,30 @@ def pwned_api_check(password):
   return get_password_leaks_count(response, tail)
 
 def user_pass():
-  password = input('Please Enter A Password That You Would Like To Check: ')
+  # password = input('Please Enter A Password That You Would Like To Check: ')
+  password = str(pass_entry.get())
   count = pwned_api_check(password)
   if count:
-    print(f'{password} was found {count} times... you should change your password!')
+    pass_resp['text'] = f'{password} was found {count} times... you should change your password!'
   else:
-    print(f'{password} was NOT found, it is safe to use!')
+    pass_resp['text'] = f'{password} was NOT found it is safe to use!'
 
 def main():
   while True:
     user_pass()
-    again = input('Press Enter to Run Again or Q and Enter to quit! ')
-    if again == 'q':
-      break
+    break
 
-if __name__ == '__main__':
-  main()
+def clear_pass():
+  pass_entry.delete(0, 'end')
+
+window = tk.Tk()
+window.title('Pwned Password Checker')
+pass_entry = tk.Entry(master=window)
+check_button = tk.Button(master=window, text='Check My Password', command=main)
+clear_entry = tk.Button(master=window, text='Clear', command=clear_pass)
+pass_resp = tk.Label(master=window, text='')
+pass_entry.grid(row=0, column=0)
+check_button.grid(row=0, column=1)
+clear_entry.grid(row=0, column=2)
+pass_resp.grid(row=1, column=0)
+window.mainloop()
